@@ -1,5 +1,26 @@
 services:
-  redis:
-    image: 'redis:latest'
+  postgres:
+    image: postgres:alpine
+    container_name: postgresdb
     ports:
-      - '6379'
+      - 5432:5432
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=root
+      - POSTGRES_DB=book_db
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    ports:
+      - 8081:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: root@root.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    volumes:
+      - ~/apps/pgadmin:/var/lib/pgadmin
+#  redis:
+#    image: 'redis:latest'
+#    ports:
+#      - '6379'

@@ -26,7 +26,6 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
         String email = (String) attributes.get("email");
         String username = (String) attributes.get("name");
 
-
         userService.findUserByEmail(email).orElseGet(() -> {
             User user = new User();
             user.setName(username);

@@ -28,8 +28,6 @@ public class SecurityConfig {
         return http
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/users/**").permitAll()
-                .requestMatchers(toH2Console()).permitAll()
-                .requestMatchers("/console/**").permitAll()
                 .anyRequest().authenticated()
             )
             .oauth2Login(oauth2 -> oauth2
@@ -37,10 +35,6 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/api/users/me", true)
             )
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .csrf(AbstractHttpConfigurer::disable)
-            .headers(httpSecurityHeadersConfigurer -> {
-                httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable);
-            })
             .build();
     }
 
