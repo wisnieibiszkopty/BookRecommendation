@@ -7,13 +7,16 @@ import org.example.bookrecomendationapp.opinion.RecommendationOpinion;
 import org.example.bookrecomendationapp.recommendationBook.RecommendationBook;
 import org.example.bookrecomendationapp.user.User;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
 @Entity
 public class Recommendation {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
 
@@ -27,13 +30,13 @@ public class Recommendation {
             joinColumns = @JoinColumn(name = "recommendation_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    private Set<Book> books = new HashSet<>();
+    private List<Book> books = new ArrayList<>();
 
     @OneToMany(mappedBy = "recommendation", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<RecommendationOpinion> opinions = new HashSet<>();
+    private List<RecommendationOpinion> opinions = new ArrayList<>();
 
     @OneToMany(mappedBy = "recommendation", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<RecommendationBook> recommendationBooks = new HashSet<>();
+    private List<RecommendationBook> recommendationBooks = new ArrayList<>();
 
     public void addBook(Book book) {
         books.add(book);

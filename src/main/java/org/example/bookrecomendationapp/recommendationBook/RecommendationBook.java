@@ -5,13 +5,16 @@ import lombok.Data;
 import org.example.bookrecomendationapp.book.Book;
 import org.example.bookrecomendationapp.recomendation.Recommendation;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
 @Entity
 public class RecommendationBook {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -24,5 +27,5 @@ public class RecommendationBook {
             joinColumns = @JoinColumn(name = "recommendation_book_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    private Set<Book> books = new HashSet<>();
+    private List<Book> books = new ArrayList<>();
 }

@@ -5,13 +5,16 @@ import lombok.Data;
 import org.example.bookrecomendationapp.book.Book;
 import org.example.bookrecomendationapp.user.User;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
 @Entity
 public class Shelf {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
@@ -25,7 +28,7 @@ public class Shelf {
             joinColumns = @JoinColumn(name = "shelf_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    private Set<Book> books = new HashSet<>();
+    private List<Book> books = new ArrayList<>();
 
     public void addBook(Book book) {
         books.add(book);

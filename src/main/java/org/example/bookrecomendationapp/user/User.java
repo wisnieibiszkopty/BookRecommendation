@@ -9,7 +9,9 @@ import org.example.bookrecomendationapp.opinion.RecommendationOpinion;
 import org.example.bookrecomendationapp.recomendation.Recommendation;
 import org.example.bookrecomendationapp.shelf.Shelf;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -22,19 +24,19 @@ public class User {
     private String name;
 
     @OneToMany(mappedBy = "addedBy", cascade = CascadeType.ALL, orphanRemoval = false)
-    private Set<Book> books = new HashSet<>();
+    private List<Book> books = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Shelf> shelves = new HashSet<>();
+    private List<Shelf> shelves = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = false)
-    private Set<Comment> comments = new HashSet<>();
+    private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = false)
-    private Set<Recommendation> recommendations = new HashSet<>();
+    private List<Recommendation> recommendations = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = false)
-    private Set<RecommendationOpinion> opinions = new HashSet<>();
+    private List<RecommendationOpinion> opinions = new ArrayList<>();
 
     public void addBook(Book book) {
         books.add(book);

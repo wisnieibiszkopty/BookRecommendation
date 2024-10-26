@@ -8,20 +8,19 @@ import org.example.bookrecomendationapp.recommendationBook.RecommendationBook;
 import org.example.bookrecomendationapp.shelf.Shelf;
 import org.example.bookrecomendationapp.user.User;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @Entity
 public class Book {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String author;
     private String description;
     private int pages;
-    private Date released;
+    private int releaseYear;
     private String image;
 
     @ManyToOne
@@ -29,14 +28,14 @@ public class Book {
     private User addedBy;
 
     @ManyToMany(mappedBy = "books")
-    private Set<Shelf> shelves = new HashSet<>();
+    private List<Shelf> shelves = new ArrayList<>();
 
     @OneToMany(mappedBy = "book")
-    private Set<Comment> comments = new HashSet<>();
+    private List<Comment> comments = new ArrayList<>();
 
     @ManyToMany(mappedBy = "books")
-    private Set<Recommendation> recommendations = new HashSet<>();
+    private List<Recommendation> recommendations = new ArrayList<>();
 
     @ManyToMany(mappedBy = "books")
-    private Set<RecommendationBook> recommendationsBooks = new HashSet<>();
+    private List<RecommendationBook> recommendationsBooks = new ArrayList<>();
 }
