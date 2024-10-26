@@ -14,6 +14,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+// TODO maybe add image from github / google
+
 @Data
 @Entity
 @Table(name = "app_user")
@@ -22,6 +24,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String email;
+    private String provider;
 
     @OneToMany(mappedBy = "addedBy", cascade = CascadeType.ALL, orphanRemoval = false)
     private List<Book> books = new ArrayList<>();
