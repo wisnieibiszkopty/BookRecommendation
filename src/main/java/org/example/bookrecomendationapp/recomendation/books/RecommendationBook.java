@@ -1,7 +1,11 @@
-package org.example.bookrecomendationapp.recommendationBook;
+package org.example.bookrecomendationapp.recomendation.books;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.example.bookrecomendationapp.book.Book;
 import org.example.bookrecomendationapp.recomendation.Recommendation;
 
@@ -12,6 +16,9 @@ import java.util.Set;
 
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class RecommendationBook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +26,7 @@ public class RecommendationBook {
 
     @ManyToOne
     @JoinColumn(name = "recommendation_id", nullable = false)
+    @JsonBackReference
     private Recommendation recommendation;
 
     @ManyToMany

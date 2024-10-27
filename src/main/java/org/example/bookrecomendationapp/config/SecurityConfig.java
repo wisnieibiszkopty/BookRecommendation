@@ -36,6 +36,7 @@ public class SecurityConfig {
                     .requestMatchers("/api/auth/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/books/**", "/api/books").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/shelves/user/**", "/api/shelves/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/recommendations/**", "/api/recommendations/book/**").permitAll()
                     .anyRequest().authenticated())
             .authenticationProvider(authenticationProvider)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

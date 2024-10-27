@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.example.bookrecomendationapp.comment.Comment;
 import org.example.bookrecomendationapp.recomendation.Recommendation;
-import org.example.bookrecomendationapp.recommendationBook.RecommendationBook;
+import org.example.bookrecomendationapp.recomendation.books.RecommendationBook;
 import org.example.bookrecomendationapp.shelf.Shelf;
 import org.example.bookrecomendationapp.user.User;
 
