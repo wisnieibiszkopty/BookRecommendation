@@ -1,5 +1,6 @@
 package org.example.bookrecomendationapp.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,22 +29,26 @@ public class User implements UserDetails {
     private Long id;
     private String name;
     private String email;
-    private String provider;
     private String password;
 
     @OneToMany(mappedBy = "addedBy", cascade = CascadeType.ALL, orphanRemoval = false)
+    @JsonIgnore
     private List<Book> books = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Shelf> shelves = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = false)
+    @JsonIgnore
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = false)
+    @JsonIgnore
     private List<Recommendation> recommendations = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = false)
+    @JsonIgnore
     private List<RecommendationOpinion> opinions = new ArrayList<>();
 
     public void addBook(Book book) {

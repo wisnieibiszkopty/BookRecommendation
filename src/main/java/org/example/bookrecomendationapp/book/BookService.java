@@ -1,13 +1,14 @@
 package org.example.bookrecomendationapp.book;
 
 import lombok.AllArgsConstructor;
-import org.example.bookrecomendationapp.book.dto.CreateBookDto;
+import org.example.bookrecomendationapp.book.dto.BookDto;
+import org.example.bookrecomendationapp.exceptions.BookNotFoundException;
+import org.example.bookrecomendationapp.user.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -17,23 +18,28 @@ public class BookService {
     private final ModelMapper modelMapper;
 
     // TODO add sorting books and pagination, books of certain user etc.
-    public List<Book> getBooks(){
-        return bookRepository.findAll();
+    public List<BookDto> getBooks(){
+        var books = bookRepository.findAll();
+        return books.stream()
+                .map(book -> modelMapper.map(book, BookDto.class))
+                .collect(Collectors.toList());
     }
 
     // TODO get book recommendations and comments
-    public Book getBook(Long id){
-        Optional<Book> optionalBook = bookRepository.findById(id);
-        return optionalBook.orElse(null);
+    public BookDto getBook(Long id){
+        var book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException());
+        return modelMapper.map(book, BookDto.class);
     }
 
-    // TODO add user which is adding book
-    public Book createBook(Book book){
-        return this.bookRepository.save(book);
+    public BookDto createBook(Book book, User user){
+        book.setAddedBy(user);
+        var savedBook = this.bookRepository.save(book);
+        return modelMapper.map(savedBook, BookDto.class);
     }
 
-    public Book updateBook(Book book){
-        return this.bookRepository.save(book);
+    public BookDto updateBook(Book book){
+        var savedBook = this.bookRepository.save(book);
+        return modelMapper.map(savedBook, BookDto.class);
     }
 
     public void deleteBook(Long id){
