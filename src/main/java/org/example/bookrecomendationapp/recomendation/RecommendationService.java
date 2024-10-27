@@ -7,11 +7,15 @@ import org.example.bookrecomendationapp.exceptions.RecommendationNotFoundExcepti
 import org.example.bookrecomendationapp.recomendation.dto.CreateRecommendationDto;
 import org.example.bookrecomendationapp.recomendation.books.RecommendationBook;
 import org.example.bookrecomendationapp.recomendation.books.RecommendationBookRepository;
+import org.example.bookrecomendationapp.recomendation.dto.RecommendationFullProjection;
 import org.example.bookrecomendationapp.user.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -22,14 +26,15 @@ public class RecommendationService {
     private final RecommendationBookRepository recommendationBookRepository;
     private final BookRepository bookRepository;
 
-    public Recommendation getRecommendation(Long id){
+    public RecommendationFullProjection getRecommendation(Long id){
         return recommendationRepository
-                .findById(id)
+                .findRecommendationById(id)
                 .orElseThrow(RecommendationNotFoundException::new);
     }
 
+    // don't work
     public List<Recommendation> getRecommendationsForBook(Long bookId){
-        return null;
+        return recommendationRepository.findAllByBooksId(bookId);
     }
 
     @Transactional
@@ -58,12 +63,29 @@ public class RecommendationService {
         return recommendationRepository.findById(savedRecommendation.getId());
     }
 
-    public void editRecommendation(){
+    public Recommendation editRecommendation(CreateRecommendationDto recommendationDto, Long recommendationId, User user){
+        var recommendation = recommendationRepository
+                .findById(recommendationId)
+                .orElseThrow(RecommendationNotFoundException::new);
 
+        if(!Objects.equals(recommendation.getUser().getId(), user.getId())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Recommendation doesn't belong to user");
+        }
+
+        recommendation.setContent(recommendationDto.content());
+        return recommendationRepository.save(recommendation);
     }
 
-    public void deleteRecommendation(){
+    public void deleteRecommendation(Long id, User user){
+        var recommendation = recommendationRepository
+                .findById(id)
+                .orElseThrow(RecommendationNotFoundException::new);
 
+        if(!Objects.equals(recommendation.getUser().getId(), user.getId())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Recommendation doesn't belong to user");
+        }
+
+        recommendationRepository.delete(recommendation);
     }
 
 }

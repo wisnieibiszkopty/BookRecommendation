@@ -15,17 +15,8 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public Optional<User> findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-    public User getCurrentUser(String name){
-        return userRepository.findByName(name)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User doesn't exists"));
-    }
-
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    public UserProjection getCurrentUser(Long id){
+        return userRepository.findCurrentUser(id);
     }
 
 }

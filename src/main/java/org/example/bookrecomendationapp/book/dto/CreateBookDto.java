@@ -1,7 +1,5 @@
 package org.example.bookrecomendationapp.book.dto;
 
-import java.util.Date;
-
 public record CreateBookDto(
         String name,
         String author,

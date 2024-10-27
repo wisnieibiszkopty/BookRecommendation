@@ -1,6 +1,7 @@
 package org.example.bookrecomendationapp.book;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -48,11 +49,10 @@ public class Book {
     private List<Shelf> shelves = new ArrayList<>();
 
     @OneToMany(mappedBy = "book")
-    @JsonBackReference
+    @JsonManagedReference
     private List<Comment> comments = new ArrayList<>();
 
     @ManyToMany(mappedBy = "books")
-    @JsonBackReference
     private List<Recommendation> recommendations = new ArrayList<>();
 
     @ManyToMany(mappedBy = "books")

@@ -1,6 +1,7 @@
 package org.example.bookrecomendationapp.recomendation.books;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,5 +36,6 @@ public class RecommendationBook {
             joinColumns = @JoinColumn(name = "recommendation_book_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
+    @JsonIgnore
     private List<Book> books = new ArrayList<>();
 }
