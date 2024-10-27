@@ -2,30 +2,34 @@ package org.example.bookrecomendationapp.user;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.example.bookrecomendationapp.book.Book;
 import org.example.bookrecomendationapp.comment.Comment;
 import org.example.bookrecomendationapp.opinion.RecommendationOpinion;
 import org.example.bookrecomendationapp.recomendation.Recommendation;
 import org.example.bookrecomendationapp.shelf.Shelf;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-// TODO maybe add image from github / google
+import java.util.*;
 
 @Data
 @Entity
+@Builder
 @Table(name = "app_user")
-public class User {
+@NoArgsConstructor
+@AllArgsConstructor
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String email;
     private String provider;
+    private String password;
 
     @OneToMany(mappedBy = "addedBy", cascade = CascadeType.ALL, orphanRemoval = false)
     private List<Book> books = new ArrayList<>();
@@ -90,5 +94,35 @@ public class User {
     public void removeRecommendationOpinion(RecommendationOpinion opinion) {
         opinions.remove(opinion);
         opinion.setUser(null);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
