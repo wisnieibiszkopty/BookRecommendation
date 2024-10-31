@@ -37,6 +37,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/api/books/**", "/api/books").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/shelves/user/**", "/api/shelves/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/recommendations/**", "/api/recommendations/book/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api-docs/**", "swagger-ui/**", "openapi/**").permitAll()
                     .anyRequest().authenticated())
             .authenticationProvider(authenticationProvider)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
