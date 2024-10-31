@@ -1,7 +1,9 @@
 package org.example.bookrecomendationapp.book;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.bookrecomendationapp.book.dto.BookDto;
+import org.example.bookrecomendationapp.book.dto.BookFullProjection;
 import org.example.bookrecomendationapp.book.dto.BookProjection;
 import org.example.bookrecomendationapp.book.dto.CreateBookDto;
 import org.example.bookrecomendationapp.exceptions.BookNotFoundException;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class BookService {
@@ -26,10 +29,9 @@ public class BookService {
         return bookRepository.findAllBooks();
     }
 
-    // TODO get book recommendations and comments
-    public Book getBook(Long id){
-        var book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException());
-        var recommendation = recommendationRepository.findRecommendationById(1L);
+    public BookFullProjection getBook(Long id){
+        var book = bookRepository.findBookById(id).orElseThrow(BookNotFoundException::new);
+        log.info(book.toString());
         return book;
     }
 
@@ -40,12 +42,14 @@ public class BookService {
         return modelMapper.map(savedBook, BookDto.class);
     }
 
+    // TODO check if current user created book
     public BookDto updateBook(BookDto bookDto){
         var book = modelMapper.map(bookDto, Book.class);
         var savedBook = this.bookRepository.save(book);
         return modelMapper.map(savedBook, BookDto.class);
     }
 
+    // TODO check if current user created book
     public void deleteBook(Long id){
         this.bookRepository.deleteById(id);
     }

@@ -13,6 +13,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     """)
     UserProjection findCurrentUser(@Param("userId") Long id);
 
+
+    Optional<User> findByName(String name);
     Optional<User> findByEmail(String email);
 
 }

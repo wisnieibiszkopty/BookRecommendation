@@ -28,6 +28,7 @@ public class CommentService {
 
     private final ModelMapper modelMapper;
 
+    // idea add pagination
     public List<CommentProjection> getComments(Long bookId){
         return commentRepository.findAllByBookId(bookId);
     }

@@ -23,6 +23,7 @@ public class ShelfService {
     private final BookRepository bookRepository;
 
     // idea -> make private shelves
+    // dont return recommendations
     public Shelf getShelf(Long id){
         return shelfRepository.findById(id).orElseThrow(ShelfNotFoundException::new);
     }

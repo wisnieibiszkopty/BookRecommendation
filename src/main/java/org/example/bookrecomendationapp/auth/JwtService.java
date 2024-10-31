@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.example.bookrecomendationapp.user.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -29,11 +30,14 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails){
+    public String generateToken(User userDetails){
         return generateToken(new HashMap<>(), userDetails);
     }
 
-    public String generateToken(Map<String, Objects> extraClaims, UserDetails userDetails){
+    public String generateToken(Map<String, Object> extraClaims, User userDetails){
+        extraClaims.put("name", userDetails.getName());
+        extraClaims.put("id", userDetails.getId());
+
         return Jwts
                 .builder()
                 .setClaims(extraClaims)

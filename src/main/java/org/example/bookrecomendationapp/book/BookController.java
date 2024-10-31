@@ -3,6 +3,7 @@ package org.example.bookrecomendationapp.book;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.bookrecomendationapp.book.dto.BookDto;
+import org.example.bookrecomendationapp.book.dto.BookFullProjection;
 import org.example.bookrecomendationapp.book.dto.BookProjection;
 import org.example.bookrecomendationapp.book.dto.CreateBookDto;
 import org.example.bookrecomendationapp.user.User;
@@ -27,7 +28,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public Book getBook(@PathVariable Long id){
+    public BookFullProjection getBook(@PathVariable Long id){
         return bookService.getBook(id);
     }
 

@@ -6,12 +6,14 @@ import org.example.bookrecomendationapp.comment.dto.CommentDto;
 import org.example.bookrecomendationapp.comment.dto.CommentProjection;
 import org.example.bookrecomendationapp.comment.dto.CreateCommentDto;
 import org.example.bookrecomendationapp.user.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Validated
 @RestController
@@ -22,12 +24,12 @@ public class CommentController {
     private final CommentService commentService;
 
     @GetMapping("/{bookId}/comments")
-    public List<CommentProjection> getBooks(@PathVariable Long bookId){
+    public List<CommentProjection> getComments(@PathVariable Long bookId){
         return commentService.getComments(bookId);
     }
 
     @GetMapping("/{bookId}/comments/{id}")
-    public CommentProjection getBook(@PathVariable Long bookId, @PathVariable Long id){
+    public CommentProjection getComment(@PathVariable Long bookId, @PathVariable Long id){
         return commentService.getComment(bookId, id);
     }
 
@@ -49,12 +51,12 @@ public class CommentController {
     }
 
     @DeleteMapping("/{bookId}/comments/{id}")
-    public ResponseEntity<String> deleteComment(
+    public ResponseEntity<?> deleteComment(
             @PathVariable Long bookId,
             @PathVariable Long id,
             @AuthenticationPrincipal User user){
         commentService.deleteComment(bookId, id, user);
-        return ResponseEntity.ok("Deleted comment");
+        return ResponseEntity.ok(Map.of("message", "Deleted comment"));
     }
 
 }

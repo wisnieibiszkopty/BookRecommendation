@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Validated
@@ -53,9 +54,11 @@ public class ShelfController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteShelf(@PathVariable Long id, @AuthenticationPrincipal User user){
+    public ResponseEntity<?> deleteShelf(@PathVariable Long id, @AuthenticationPrincipal User user){
         shelfService.deleteShelf(id, user.getId());
-        return ResponseEntity.ok("Deleted shelf");
+        return ResponseEntity.ok(Map.of("message", "Deleted shelf"));
     }
+
+    // TODO add deleting book from shelf
 
 }
