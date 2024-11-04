@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
+// TODO add handling for response status
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

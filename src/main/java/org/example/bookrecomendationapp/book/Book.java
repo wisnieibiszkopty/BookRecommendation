@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.example.bookrecomendationapp.comment.Comment;
@@ -13,7 +14,8 @@ import org.example.bookrecomendationapp.recomendation.Recommendation;
 import org.example.bookrecomendationapp.recomendation.books.RecommendationBook;
 import org.example.bookrecomendationapp.shelf.Shelf;
 import org.example.bookrecomendationapp.user.User;
-import org.hibernate.validator.constraints.UniqueElements;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.*;
 
@@ -25,9 +27,11 @@ public class Book {
     private Long id;
 
     @NotBlank(message = "Book name is required")
+    @NotEmpty(message = "Book name is required")
     private String name;
 
     @NotBlank(message = "Book author is required")
+    @NotEmpty(message = "Book author is required")
     private String author;
 
     @Size(max = 1000, message = "Description cannot exceed 1000 characters")

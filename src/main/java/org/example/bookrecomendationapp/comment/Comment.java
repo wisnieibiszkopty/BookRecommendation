@@ -3,6 +3,7 @@ package org.example.bookrecomendationapp.comment;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +12,6 @@ import org.example.bookrecomendationapp.book.Book;
 import org.example.bookrecomendationapp.user.User;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @Entity
@@ -24,6 +24,7 @@ public class Comment {
     private Long id;
 
     @NotBlank(message = "Comment content is required")
+    @NotEmpty(message = "Comment content is required")
     private String content;
 
     private LocalDate date;

@@ -37,8 +37,6 @@ public class CommentService {
         return commentRepository.findByBookIdAndId(bookId, id).orElseThrow(BookNotFoundException::new);
     }
 
-    // how this orm is even supposed to work?????
-    // TODO optimize
     public CommentDto addComment(Long bookId, CreateCommentDto commentDto, User user){
         var book = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
         var comment = Comment.builder()
@@ -56,7 +54,7 @@ public class CommentService {
         return commentResponse;
     }
 
-    // TODO optimize
+    // TODO optimize -> 8 selects for 1 update 💀💀💀😭😭😭
     public CommentDto updateComment(Long bookId, Long id, User user, CreateCommentDto commentDto){
         var commentProjection = commentRepository.findByBookIdAndId(bookId, id).orElseThrow(() -> new CommentNotFoundException());
 

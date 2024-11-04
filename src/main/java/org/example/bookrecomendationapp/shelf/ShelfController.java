@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.bookrecomendationapp.shelf.dto.CreateShelfDto;
+import org.example.bookrecomendationapp.shelf.dto.ShelfProjection;
 import org.example.bookrecomendationapp.user.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,7 +29,7 @@ public class ShelfController {
     }
 
     @GetMapping("/user/{userId}")
-    public List<Shelf> getUserShelves(@PathVariable Long userId){
+    public List<ShelfProjection> getUserShelves(@PathVariable Long userId){
         return shelfService.getShelves(userId);
     }
 
@@ -59,6 +60,13 @@ public class ShelfController {
         return ResponseEntity.ok(Map.of("message", "Deleted shelf"));
     }
 
-    // TODO add deleting book from shelf
+    @DeleteMapping("/{shelfId}/book/{bookId}")
+    public ResponseEntity<?> deleteBookFromShelf(
+            @PathVariable Long shelfId,
+            @PathVariable Long bookId,
+            @AuthenticationPrincipal User user){
+        shelfService.deleteBookFromShelf(shelfId, bookId, user.getId());
+        return ResponseEntity.ok(Map.of("message", "Deleted book from shelf"));
+    }
 
 }
