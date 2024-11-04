@@ -1,6 +1,7 @@
 package org.example.bookrecomendationapp.opinion;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.bookrecomendationapp.exceptions.OpinionAlreadyExistsException;
 import org.example.bookrecomendationapp.exceptions.OpinionNotFoundException;
 import org.example.bookrecomendationapp.exceptions.RecommendationNotFoundException;
@@ -14,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Objects;
 
 @Service
+@Slf4j
 @AllArgsConstructor
 public class RecommendationOpinionService {
 
@@ -39,12 +41,12 @@ public class RecommendationOpinionService {
         return opinionRepository.save(recommendationOpinion);
     }
 
-    public void deleteOpinion(Long recommendationId, Long opinionId, User user){
+    public void deleteOpinion(Long recommendationId, Long opinionId, Long userId){
         var opinion = opinionRepository
-                .findRecommendationOpinionByIdAndRecommendationId(recommendationId, opinionId)
+                .findRecommendationOpinionByIdAndUserIdAndRecommendationId(opinionId, userId, recommendationId)
                 .orElseThrow(OpinionNotFoundException::new);
 
-        if(!Objects.equals(opinion.getUser().getId(), user.getId())){
+        if(!Objects.equals(opinion.getUser().getId(), userId)){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Opinion doesn't belong to user");
         }
 

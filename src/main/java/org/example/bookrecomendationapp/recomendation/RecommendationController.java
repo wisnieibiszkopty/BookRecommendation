@@ -3,6 +3,7 @@ package org.example.bookrecomendationapp.recomendation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.bookrecomendationapp.recomendation.dto.CreateRecommendationDto;
+import org.example.bookrecomendationapp.recomendation.dto.EditRecommendationDto;
 import org.example.bookrecomendationapp.recomendation.dto.RecommendationFullProjection;
 import org.example.bookrecomendationapp.user.User;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,6 @@ public class RecommendationController {
         return recommendationService.getRecommendation(id);
     }
 
-    // don't work
     @GetMapping("/book/{bookId}")
     public List<Recommendation> getRecommendationsForBook(@PathVariable Long bookId){
         return recommendationService.getRecommendationsForBook(bookId);
@@ -42,7 +42,7 @@ public class RecommendationController {
     @PutMapping("/{id}")
     public Recommendation editRecommendation(
         @PathVariable Long id,
-        @Valid @RequestBody CreateRecommendationDto recommendationDto,
+        @Valid @RequestBody EditRecommendationDto recommendationDto,
         @AuthenticationPrincipal User user){
         return recommendationService.editRecommendation(recommendationDto, id, user);
     }

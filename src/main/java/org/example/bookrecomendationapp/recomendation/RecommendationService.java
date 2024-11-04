@@ -7,6 +7,7 @@ import org.example.bookrecomendationapp.exceptions.RecommendationNotFoundExcepti
 import org.example.bookrecomendationapp.recomendation.dto.CreateRecommendationDto;
 import org.example.bookrecomendationapp.recomendation.books.RecommendationBook;
 import org.example.bookrecomendationapp.recomendation.books.RecommendationBookRepository;
+import org.example.bookrecomendationapp.recomendation.dto.EditRecommendationDto;
 import org.example.bookrecomendationapp.recomendation.dto.RecommendationFullProjection;
 import org.example.bookrecomendationapp.user.User;
 import org.springframework.http.HttpStatus;
@@ -26,19 +27,20 @@ public class RecommendationService {
     private final RecommendationBookRepository recommendationBookRepository;
     private final BookRepository bookRepository;
 
+    // This method uses weird custom sql which doesn't work
     public RecommendationFullProjection getRecommendation(Long id){
         return recommendationRepository
                 .findRecommendationById(id)
                 .orElseThrow(RecommendationNotFoundException::new);
     }
 
-    // don't work
     public List<Recommendation> getRecommendationsForBook(Long bookId){
         return recommendationRepository.findAllByBooksId(bookId);
     }
 
     @Transactional
     public Optional<Recommendation> addRecommendation(CreateRecommendationDto recommendationDto, User user){
+        // checking if books about which is recommendation exist
         var firstBook = bookRepository
                 .findById(recommendationDto.firstBookId())
                 .orElseThrow(BookNotFoundException::new);
@@ -54,17 +56,25 @@ public class RecommendationService {
 
         var savedRecommendation = recommendationRepository.save(recommendation);
 
-        var recommendationBooks = RecommendationBook.builder()
+//        var recommendationBooks = RecommendationBook.builder()
+//                .recommendation(recommendation)
+//                .books(List.of(firstBook, secondBook))
+//                .build();
+        var recommendationBookFirst = RecommendationBook.builder()
+            .recommendation(recommendation)
+            .books(List.of(firstBook))
+            .build();
+        var recommendationBookSecond = RecommendationBook.builder()
                 .recommendation(recommendation)
-                .books(List.of(firstBook, secondBook))
+                .books(List.of(secondBook))
                 .build();
 
-        recommendationBookRepository.save(recommendationBooks);
+        recommendationBookRepository.saveAll(List.of(recommendationBookFirst, recommendationBookSecond));
 
         return recommendationRepository.findById(savedRecommendation.getId());
     }
 
-    public Recommendation editRecommendation(CreateRecommendationDto recommendationDto, Long recommendationId, User user){
+    public Recommendation editRecommendation(EditRecommendationDto recommendationDto, Long recommendationId, User user){
         var recommendation = recommendationRepository
                 .findById(recommendationId)
                 .orElseThrow(RecommendationNotFoundException::new);

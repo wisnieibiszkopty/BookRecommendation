@@ -48,7 +48,6 @@ public class Recommendation {
             joinColumns = @JoinColumn(name = "recommendation_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    @JsonBackReference
     private List<Book> books = new ArrayList<>();
 
     public void addBook(Book book) {

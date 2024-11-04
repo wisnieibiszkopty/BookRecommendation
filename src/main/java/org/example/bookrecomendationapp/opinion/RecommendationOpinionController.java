@@ -27,7 +27,7 @@ public class RecommendationOpinionController {
             @PathVariable Long recommendationId,
             @PathVariable Long opinionId,
             @AuthenticationPrincipal User user){
-        opinionService.deleteOpinion(recommendationId, opinionId, user);
+        opinionService.deleteOpinion(recommendationId, opinionId, user.getId());
         return ResponseEntity.ok("Opinion deleted");
     }
 

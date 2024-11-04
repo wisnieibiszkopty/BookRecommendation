@@ -11,4 +11,6 @@ public interface RecommendationOpinionRepository extends JpaRepository<Recommend
 
     Optional<RecommendationOpinion> findRecommendationOpinionByIdAndRecommendationId(Long opinionId, Long recommendationId);
 
+    Optional<RecommendationOpinion> findRecommendationOpinionByIdAndUserIdAndRecommendationId(Long opinionId, Long userId, Long recommendationId);
+
 }
