@@ -1,4 +1,5 @@
 package org.example.bookrecomendationapp.shelf.dto;
 
-public record CreateShelfDto(String name) {
-}
+import jakarta.validation.constraints.NotBlank;
+
+public record CreateShelfDto(@NotBlank(message = "Shelf name is required") String name) {}

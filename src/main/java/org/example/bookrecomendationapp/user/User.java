@@ -2,6 +2,8 @@ package org.example.bookrecomendationapp.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +13,7 @@ import org.example.bookrecomendationapp.comment.Comment;
 import org.example.bookrecomendationapp.opinion.RecommendationOpinion;
 import org.example.bookrecomendationapp.recomendation.Recommendation;
 import org.example.bookrecomendationapp.shelf.Shelf;
+import org.example.bookrecomendationapp.user.password.Password;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,8 +30,14 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank
     private String name;
+
+    @Email
     private String email;
+
+    @Password
     private String password;
 
     @OneToMany(mappedBy = "addedBy", cascade = CascadeType.ALL, orphanRemoval = false)

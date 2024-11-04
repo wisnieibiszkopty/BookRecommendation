@@ -49,6 +49,7 @@ public class RecommendationService {
         var recommendation = Recommendation.builder()
                 .content(recommendationDto.content())
                 .user(user)
+                .books(List.of(firstBook, secondBook))
                 .build();
 
         var savedRecommendation = recommendationRepository.save(recommendation);

@@ -1,4 +1,6 @@
 package org.example.bookrecomendationapp.opinion.dto;
 
-public record CreateOpinionDto(boolean agreed) {
+import jakarta.validation.constraints.NotNull;
+
+public record CreateOpinionDto(@NotNull(message = "Opinion is required") boolean agreed) {
 }

@@ -3,6 +3,8 @@ package org.example.bookrecomendationapp.recomendation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +26,9 @@ public class Recommendation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Recommendation content is required")
+    @Size(max = 10000, min = 3, message = "Content cannot exceed 10000 characters")
     private String content;
 
     @ManyToOne

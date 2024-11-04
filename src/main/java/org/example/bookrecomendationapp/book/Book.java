@@ -1,6 +1,7 @@
 package org.example.bookrecomendationapp.book;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
@@ -12,6 +13,7 @@ import org.example.bookrecomendationapp.recomendation.Recommendation;
 import org.example.bookrecomendationapp.recomendation.books.RecommendationBook;
 import org.example.bookrecomendationapp.shelf.Shelf;
 import org.example.bookrecomendationapp.user.User;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.*;
 
@@ -37,6 +39,7 @@ public class Book {
     // Epic of Gilgamesh
     @Min(value = -2300, message = "There are no books so old")
     private int releaseYear;
+
     private String image;
 
     @ManyToOne
@@ -46,16 +49,20 @@ public class Book {
 
     @ManyToMany(mappedBy = "books")
     @JsonBackReference
+    @JsonIgnore
     private List<Shelf> shelves = new ArrayList<>();
 
     @OneToMany(mappedBy = "book")
     @JsonManagedReference
+    @JsonIgnore
     private List<Comment> comments = new ArrayList<>();
 
     @ManyToMany(mappedBy = "books")
+    @JsonIgnore
     private List<Recommendation> recommendations = new ArrayList<>();
 
     @ManyToMany(mappedBy = "books")
     @JsonBackReference
+    @JsonIgnore
     private List<RecommendationBook> recommendationsBooks = new ArrayList<>();
 }
