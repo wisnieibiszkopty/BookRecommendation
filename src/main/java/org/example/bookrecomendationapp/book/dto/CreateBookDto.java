@@ -22,4 +22,5 @@ public record CreateBookDto(
 
         @Min(value = -2300, message = "There are no books so old")
         int releaseYear,
-        String image) {}
+        String image,
+        Long addedBy) {}

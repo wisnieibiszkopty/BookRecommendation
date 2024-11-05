@@ -12,6 +12,7 @@ import org.example.bookrecomendationapp.book.Book;
 import org.example.bookrecomendationapp.user.User;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -27,7 +28,7 @@ public class Comment {
     @NotEmpty(message = "Comment content is required")
     private String content;
 
-    private LocalDate date;
+    private LocalDateTime date;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

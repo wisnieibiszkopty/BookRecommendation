@@ -7,6 +7,7 @@ import org.example.bookrecomendationapp.book.dto.BookFullProjection;
 import org.example.bookrecomendationapp.book.dto.BookProjection;
 import org.example.bookrecomendationapp.book.dto.CreateBookDto;
 import org.example.bookrecomendationapp.user.User;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
@@ -23,8 +24,10 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public List<BookProjection> getBooks(){
-        return bookService.getBooks();
+    public Page<BookProjection> getBooks(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size){
+        return bookService.getBooks(page, size);
     }
 
     @GetMapping("/{id}")
@@ -37,14 +40,18 @@ public class BookController {
         return bookService.createBook(book, user);
     }
 
-    @PutMapping()
-    public BookDto editBook(@Valid @RequestBody BookDto book){
-        return bookService.updateBook(book);
+    @PutMapping("/{bookId}")
+    public BookDto editBook(
+            @PathVariable Long bookId,
+            @Valid @RequestBody BookDto book,
+            @AuthenticationPrincipal User user){
+        return bookService.updateBook(bookId, book, user.getId());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteBook(@PathVariable Long id){
-        bookService.deleteBook(id);
+    public ResponseEntity<?> deleteBook(
+            @PathVariable Long id, @AuthenticationPrincipal User user){
+        bookService.deleteBook(id, user.getId());
         return ResponseEntity.ok().build();
     }
 

@@ -14,7 +14,9 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Query("""
         SELECT c.id AS id, c.content AS content, c.date AS date, c.book.id AS bookId, u.name AS userName, u.id AS userId
-        FROM Comment c JOIN c.user u WHERE c.book.id = :bookId
+            FROM Comment c JOIN c.user u
+            WHERE c.book.id = :bookId
+            ORDER BY c.date DESC
     """)
     List<CommentProjection> findAllByBookId(@Param("bookId") Long bookId);
 
