@@ -8,19 +8,23 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.example.bookrecomendationapp.comment.Comment;
 import org.example.bookrecomendationapp.recomendation.Recommendation;
 import org.example.bookrecomendationapp.recomendation.books.RecommendationBook;
 import org.example.bookrecomendationapp.shelf.Shelf;
 import org.example.bookrecomendationapp.user.User;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.*;
 
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
