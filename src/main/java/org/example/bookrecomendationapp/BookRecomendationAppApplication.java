@@ -4,13 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-// TODO
 /*
-    1. Check validation
-    2. Optimize queries
-    3. Handle exception in better way
-    4. Test everything
-    5. Made frontend
 
     6. Add categories (tags?)
     7. Friends requests

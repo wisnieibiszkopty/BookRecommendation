@@ -26,7 +26,7 @@ public class BookController {
     @GetMapping
     public Page<BookProjection> getBooks(
         @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "10") int size){
+        @RequestParam(defaultValue = "9") int size){
         return bookService.getBooks(page, size);
     }
 

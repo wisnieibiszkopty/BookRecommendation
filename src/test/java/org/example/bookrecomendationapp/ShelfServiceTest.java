@@ -47,16 +47,6 @@ public class ShelfServiceTest {
     }
 
     @Test
-    public void testGettingShelf(){
-
-    }
-
-    @Test
-    public void testGettingShelves(){
-
-    }
-
-    @Test
     public void testAddingShelf(){
         CreateShelfDto shelfDto = new CreateShelfDto("new shelf");
         User user = User.builder().id(123L).build();
@@ -170,16 +160,6 @@ public class ShelfServiceTest {
 
         assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
         assertEquals("Shelf doesn't belong to user", ex.getReason());
-    }
-
-    @Test
-    public void testAddingBookToShelf(){
-
-    }
-
-    @Test
-    public void testDeletingBookFromShelf(){
-
     }
 
 }
